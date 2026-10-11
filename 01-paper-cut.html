@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#d6c4a0">
-<title>درس ساختمان داده‌ها | کاغذ بریده</title>
+<title>درس ساختمان داده‌ها | گروهبندی اول</title>
 <style>
 @font-face{font-family:"IRANYekanX";src:url("fonts/x ایران یکان/IRANYekanX Pro/Variable Font/webfont/IRANYekanXVF.woff2") format("woff2");font-weight:100 900;font-display:swap}
 @font-face{font-family:"Peyda";src:url("fonts/پیدا/PeydaWeb/woff2/PeydaWeb-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
@@ -81,8 +81,6 @@ li:hover{padding-inline-start:8px;color:var(--rust)}
 @media(max-width:1000px){.board{columns:2}}
 @media(max-width:640px){.board{columns:1}.layer{opacity:.55}.l-wave{display:none}h1{text-shadow:2px 2px 0 var(--sun),4px 4px 0 var(--rust)}}
 @media(prefers-reduced-motion:reduce){.layer,.title-sheet{animation:none}.sheet[data-rv]{opacity:1;translate:0 0;rotate:0deg}}
-
-/* Soft paper-cut cursor: compact, playful, and low-contrast */
 .pc-cursor{display:none}
 @media (hover:hover) and (pointer:fine){
   html,body,a,button,input{cursor:none}
@@ -129,15 +127,12 @@ li:hover{padding-inline-start:8px;color:var(--rust)}
 <main class="board" id="groups"></main>
 <p class="empty" id="empty" role="status" hidden>چیزی پیدا نشد. نام را کوتاه‌تر بنویسید یا جست‌وجو را پاک کنید.</p>
 <footer class="foot"><span></span><span>Design by ATLAS</span></footer>
-
-<!-- Decorative cursor; hidden from assistive technology -->
 <div class="pc-cursor" id="pcCursor" aria-hidden="true">
   <div class="pc-halo"></div>
   <div class="pc-pointer"></div>
 </div>
 
 <script>
-/* Cursor runs independently from the data module, so it still works if the module import fails. */
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 if(matchMedia('(hover:hover) and (pointer:fine)').matches){
   const cursor=document.getElementById('pcCursor');
