@@ -81,7 +81,7 @@ h1{position:relative;z-index:3;margin:clamp(6px,2vh,24px) 0 0;text-align:center;
 <body>
 <header class="top"><span><b>دانشگاه اصفهان</b> | دانشکده مهندسی کامپیوتر</span><span>استاد درس: دکتر افسانه فاطمی</span></header>
 <h1>ساختمان داده‌ها</h1>
-<div class="stage" id="stage" tabindex="0" role="group" aria-roledescription="چرخ‌فلک" aria-label="ده گروه‌بندی؛ با کلیدهای چپ و راست جابه‌جا شوید">
+<div class="stage" id="stage" tabindex="0" role="group" aria-roledescription="چرخ‌فلک" aria-label="نه گروه‌بندی؛ با کلیدهای چپ و راست جابه‌جا شوید">
   <div class="ghost" id="ghost" aria-hidden="true"></div>
   <div class="ring" id="ring"></div>
 </div>
@@ -112,19 +112,18 @@ const THEMES=[
  {file:'08-line-gallery.html',name:'گالری خطی',sub:'درخت و خط نازک',bg:'#f6f5f1',fg:'#1c2326',c:'#d2452b',ff:"100 1em 'Pelak','Peyda',sans-serif",fw:300,
   art:'<g stroke="#1c2326" stroke-width=".9" fill="none"><path d="M50 14L28 38M50 14L72 38M28 38L18 66M28 38L38 66M72 38L62 66M72 38L82 66"/><g fill="#f6f5f1"><circle cx="50" cy="14" r="6"/><circle cx="28" cy="38" r="5"/><circle cx="72" cy="38" r="5"/><circle cx="18" cy="66" r="4"/><circle cx="38" cy="66" r="4"/><circle cx="62" cy="66" r="4"/></g><circle cx="82" cy="66" r="4" fill="#d2452b" stroke="#d2452b"/><path d="M10 88H90M10 84V92M90 84V92"/></g>'},
  {file:'09-brutal-type.html',name:'تایپوگرافی',sub:'حروف درشت و خشن',bg:'#f4f4ef',fg:'#000',c:'#c6ff00',ff:"900 1em 'Sanat','Peyda',sans-serif",
-  art:'<rect x="0" y="0" width="100" height="100" fill="#c6ff00"/><rect x="0" y="16" width="100" height="18" fill="#000"/><rect x="0" y="40" width="72" height="18" fill="#000"/><rect x="0" y="64" width="100" height="18" fill="none" stroke="#000" stroke-width="3"/><circle cx="82" cy="49" r="12" fill="#f4f4ef" stroke="#000" stroke-width="3"/>'},
- {file:'10-aurora-glass.html',name:'شفق',sub:'شیشه و نور',bg:'#0a1a30',fg:'#eafff8',c:'#7cf5d0',ff:"800 1em 'Abar','Peyda',sans-serif",fw:800,
-  art:'<defs><radialGradient id="g1"><stop offset="0" stop-color="#7cf5d0" stop-opacity=".9"/><stop offset="1" stop-color="#7cf5d0" stop-opacity="0"/></radialGradient><radialGradient id="g2"><stop offset="0" stop-color="#a58bff" stop-opacity=".9"/><stop offset="1" stop-color="#a58bff" stop-opacity="0"/></radialGradient></defs><circle cx="30" cy="30" r="50" fill="url(#g1)"/><circle cx="76" cy="66" r="52" fill="url(#g2)"/><rect x="18" y="34" width="64" height="34" rx="9" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".4"/><rect x="26" y="44" width="30" height="4" rx="2" fill="#fff" fill-opacity=".8"/><rect x="26" y="54" width="20" height="4" rx="2" fill="#fff" fill-opacity=".45"/>'}
+  art:'<rect x="0" y="0" width="100" height="100" fill="#c6ff00"/><rect x="0" y="16" width="100" height="18" fill="#000"/><rect x="0" y="40" width="72" height="18" fill="#000"/><rect x="0" y="64" width="100" height="18" fill="none" stroke="#000" stroke-width="3"/><circle cx="82" cy="49" r="12" fill="#f4f4ef" stroke="#000" stroke-width="3"/>'}
 ];
 const $=s=>document.querySelector(s);
 const fa=n=>Number(n).toLocaleString('fa-IR');
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const N=THEMES.length,STEP=360/N;
-const ORD=['اول','دوم','سوم','چهارم','پنجم','ششم','هفتم','هشتم','نهم','دهم'];
-const label=i=>`گروه‌بندی ${ORD[i]}`;
+const ORD = ['تمرین اول', 'تمرین دوم', 'تمرین سوم', 'پروژه اول', 'تمرین چهارم', 'تمرین پنجم', 'تمرین ششم', 'پروژه دوم', 'تمرین هفتم'];
+const label = i => `گروه‌بندی ${ORD[i]}`;
+const cardLabel = i => ORD[i];
 const stage=$('#stage'),ring=$('#ring'),dots=$('#dots'),go=$('#go');
 const lum=c=>{const v=parseInt(c.slice(1),16);return(.299*(v>>16)+.587*((v>>8)&255)+.114*(v&255))/255;};
-ring.innerHTML=THEMES.map((t,i)=>`<div class="card" data-i="${i}" style="--bg2:${t.bg};--c-fg:${t.fg};--ff:${t.ff};--fw:${t.fw||900}"><span class="n">${fa(i+1)}</span><div class="art"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${t.art}</svg></div><div class="lab"><b>${label(i)}</b></div></div>`).join('');
+ring.innerHTML=THEMES.map((t,i)=>`<div class="card" data-i="${i}" style="--bg2:${t.bg};--c-fg:${t.fg};--ff:${t.ff};--fw:${t.fw||900}"><span class="n">${fa(i+1)}</span><div class="art"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${t.art}</svg></div><div class="lab"><b>${cardLabel(i)}</b></div></div>`).join('');
 dots.innerHTML=THEMES.map((t,i)=>`<button type="button" data-i="${i}" aria-label="${label(i)}">${fa(i+1)}</button>`).join('');
 const cards=[...ring.children],dotEls=[...dots.children];
 const soon=new Set();
