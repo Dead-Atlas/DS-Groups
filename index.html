@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#d6c4a0" id="tc">
+<title>ساختمان داده‌ها | گروه‌بندی</title>
+<style>
+@font-face{font-family:"IRANYekanX";src:url("fonts/x ایران یکان/IRANYekanX Pro/Variable Font/webfont/IRANYekanXVF.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Peyda";src:url("fonts/پیدا/PeydaWeb/woff2/PeydaWeb-Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Peyda";src:url("fonts/پیدا/PeydaWeb/woff2/PeydaWeb-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Peyda";src:url("fonts/پیدا/PeydaWeb/woff2/PeydaWeb-Black.woff2") format("woff2");font-weight:900;font-display:swap}
+@font-face{font-family:"Kenaar";src:url("fonts/کنار/04- Kenaar Variable/Variable WebFont/KenaarGX.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Hasti";src:url("fonts/هستی/Hasti package 1.4 [@fontiranir]/Webfonts/Hasti-Heavy.woff") format("woff");font-weight:900;font-display:swap}
+@font-face{font-family:"Abar";src:url("fonts/ابر/Abar Variable/Webfonts/woff2/Abar-VF.woff2") format("woff2");font-weight:100 900;font-display:swap}
+@font-face{font-family:"Lalezar";src:url("fonts/لاله زار/Lalezar-Regular.ttf") format("truetype");font-display:swap}
+@font-face{font-family:"Dastan";src:url("fonts/داستان/A.Dastan.ttf") format("truetype");font-display:swap}
+@font-face{font-family:"Damavand";src:url("fonts/دماوند/Web Fonts/Damavand ExtraBold.woff2") format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"BlockSharp";src:url("fonts/بلوک/webfonts/woff2/Block-sharp.woff2") format("woff2");font-display:swap}
+@font-face{font-family:"Pelak";src:url("fonts/پلاک/Pelak-Thin.otf") format("opentype");font-weight:100;font-display:swap}
+@font-face{font-family:"Pelak";src:url("fonts/پلاک/Pelak-Regular.otf") format("opentype");font-weight:400;font-display:swap}
+@font-face{font-family:"Sanat";src:url("fonts/صنعت/Sanat-Black@RayganFont.ttf") format("truetype");font-weight:900;font-display:swap}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+:root{--bg:#d6c4a0;--fg:#2a2118;--cw:clamp(150px,19vw,240px)}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100dvh;display:flex;flex-direction:column;font-family:'IRANYekanX','Peyda',Tahoma,sans-serif;background:var(--bg);color:var(--fg);line-height:1.8;overflow-x:hidden;transition:background .7s ease,color .7s ease;user-select:none;-webkit-user-select:none}
+:focus-visible{outline:3px solid var(--fg);outline-offset:4px}
+.top{position:relative;z-index:3;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:max(18px,env(safe-area-inset-top)) clamp(18px,4vw,56px) 0;font:500 13px 'Peyda',sans-serif;opacity:.85}
+.top b{font-weight:700}
+h1{position:relative;z-index:3;margin:clamp(6px,2vh,24px) 0 0;text-align:center;font:900 clamp(46px,8.5vw,128px)/1 'Kenaar','Peyda',sans-serif;letter-spacing:-.02em}
+.ghost{position:absolute;inset-inline:0;top:50%;translate:0 -52%;text-align:center;white-space:nowrap;font-size:clamp(110px,26vw,400px);line-height:1;color:var(--fg);opacity:.1;pointer-events:none;z-index:0;overflow:hidden}
+.ghost span{display:inline-block;animation:ghost .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes ghost{from{opacity:0;transform:translateY(40px) scale(.96)}}
+.stage{position:relative;z-index:1;flex:1;min-height:calc(var(--cw)*1.34 + 70px);display:grid;place-items:center;perspective:1500px;perspective-origin:50% 40%;cursor:grab;touch-action:pan-y;}
+.stage.drag{cursor:grabbing}
+.stage:focus-visible{outline:2px dashed var(--fg);outline-offset:-10px;border-radius:28px}
+.stage::after{content:"";position:absolute;left:50%;bottom:6%;width:min(70vw,640px);height:46px;translate:-50% 0;background:radial-gradient(ellipse,rgba(0,0,0,.28),transparent 70%);filter:blur(6px);pointer-events:none}
+.ring{position:relative;width:var(--cw);height:calc(var(--cw)*1.3333);transform-style:preserve-3d;will-change:transform}
+@keyframes fadein{from{opacity:0}}
+.card{position:absolute;inset:0;border-radius:16px;overflow:hidden;background:var(--bg2);color:var(--c-fg);box-shadow:0 28px 60px -12px rgba(0,0,0,.4),0 0 0 1px rgba(0,0,0,.08);backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column}
+.card .art{flex:1;position:relative;min-height:0}
+.card svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.card .lab{padding:10px 14px 12px;background:var(--bg2);border-top:1px solid rgba(0,0,0,.12);pointer-events:none}
+.card .lab b{display:block;font:var(--ff);font-size:clamp(16px,1.55vw,22px);line-height:1.2;font-weight:var(--fw,900)}
+.card .n{position:absolute;top:10px;inset-inline-end:12px;z-index:2;font:900 12px 'Peyda',sans-serif;background:var(--c-fg);color:var(--bg2);border-radius:99px;padding:0 9px;pointer-events:none}
+.card.soon{filter:grayscale(1) contrast(.85)}
+.card.soon::after{content:"به‌زودی";position:absolute;inset:0;display:grid;place-items:center;background:rgba(255,255,255,.55);color:#111;font:900 22px 'Peyda',sans-serif}
+.info{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 18px;text-align:center;min-height:120px}
+.info .nm{font:var(--ff);font-size:clamp(34px,5vw,64px);line-height:1.15;font-weight:var(--fw,900);animation:ghost .5s cubic-bezier(.2,.8,.2,1)}
+.go{display:inline-flex;align-items:center;gap:10px;margin-top:8px;padding:10px 34px;border-radius:999px;background:var(--fg);color:var(--bg);text-decoration:none;font:800 16px 'Peyda',sans-serif;transition:transform .25s cubic-bezier(.2,1.5,.4,1),opacity .3s,background .7s,color .7s}
+.go:hover{transform:scale(1.07)}
+.go[aria-disabled="true"]{opacity:.4;pointer-events:none}
+.dots{position:relative;z-index:3;display:flex;justify-content:center;gap:clamp(4px,1vw,10px);flex-wrap:wrap;padding:16px 14px 6px}
+.dots button{width:clamp(28px,3vw,34px);height:clamp(28px,3vw,34px);border-radius:50%;border:1.5px solid var(--fg);background:transparent;color:var(--fg);font:800 12px 'Peyda',sans-serif;padding:0;transition:background .3s,color .3s,transform .3s cubic-bezier(.2,1.5,.4,1)}
+.dots button[aria-current="true"]{background:var(--fg);color:var(--bg);transform:scale(1.25)}
+.dots button.soon{opacity:.35}
+.hint{position:relative;z-index:3;text-align:center;font:500 12px 'Peyda',sans-serif;opacity:.65;margin:6px 0 0}
+.foot{position:relative;z-index:3;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px clamp(18px,4vw,56px) max(18px,env(safe-area-inset-bottom));font:500 12px 'Peyda',sans-serif;opacity:.75}
+@media(max-width:560px){.top{font-size:12px}.hint{display:none}.foot{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.ghost span,.info .nm{animation:none}body,.go,.dots button{transition:none}}
+.cur{display:none}
+@media(hover:hover) and (pointer:fine){
+  body.cursor-on,body.cursor-on *{cursor:none!important}
+  .cur{display:block;position:fixed;left:0;top:0;z-index:9999;pointer-events:none;opacity:0;transition:opacity .2s}
+  body.cursor-on .cur{opacity:1}
+  .cur-dot{width:7px;height:7px;border-radius:50%;background:var(--fg);transition:opacity .15s,background .7s}
+  .cur-ring{display:grid;place-items:center;min-width:36px;height:36px;border:1.5px solid var(--fg);border-radius:99px;color:var(--bg);font:800 13px/1 'Peyda',sans-serif;white-space:nowrap;transition:min-width .28s cubic-bezier(.2,1.4,.4,1),height .28s cubic-bezier(.2,1.4,.4,1),background .3s,border-color .7s,padding .28s,transform .0s}
+  .cur-ring span{display:block;max-width:0;overflow:hidden;opacity:0;transition:max-width .28s,opacity .2s}
+  .cur.lbl .cur-ring{background:var(--fg);padding:0 18px;height:40px}
+  .cur.lbl .cur-ring span{max-width:120px;opacity:1}
+  .cur.lbl .cur-dot{opacity:0}
+  .cur.btn .cur-ring{min-width:54px;height:54px;background:color-mix(in srgb,var(--fg) 14%,transparent)}
+  .cur.down .cur-ring{min-width:22px;height:22px;padding:0}
+  .cur.down.lbl .cur-ring{height:30px;padding:0 12px}
+  .cur .a,.cur .b{position:absolute;left:0;top:0;will-change:transform}
+}
+</style>
+</head>
+<body>
+<header class="top"><span><b>دانشگاه اصفهان</b> | دانشکده مهندسی کامپیوتر</span><span>استاد درس: دکتر افسانه فاطمی</span></header>
+<h1>ساختمان داده‌ها</h1>
+<div class="stage" id="stage" tabindex="0" role="group" aria-roledescription="چرخ‌فلک" aria-label="ده گروه‌بندی؛ با کلیدهای چپ و راست جابه‌جا شوید">
+  <div class="ghost" id="ghost" aria-hidden="true"></div>
+  <div class="ring" id="ring"></div>
+</div>
+<section class="info" aria-live="polite">
+  <div class="nm" id="nm"></div>
+  <a class="go" id="go" href="#">ورود به صفحه</a>
+</section>
+<nav class="dots" id="dots" aria-label="انتخاب گروه‌بندی"></nav>
+<p class="hint">بکشید، یا از کلیدهای چپ و راست استفاده کنید</p>
+<footer class="foot"><span id="status"></span><span>Design by Atlas</span></footer>
+<div class="cur" id="cur" aria-hidden="true"><div class="a" id="curA"><div class="cur-ring" id="curRing"><span id="curTx"></span></div></div><div class="b" id="curB"><div class="cur-dot"></div></div></div>
+<script>
+const THEMES=[
+ {file:'01-paper-cut.html',name:'کاغذ بریده',sub:'کلاژ و نوار چسب',bg:'#d6c4a0',fg:'#2a2118',c:'#eba93a',ff:"900 1em 'Hasti','Peyda',sans-serif",
+  art:'<circle cx="82" cy="30" r="24" fill="#eba93a"/><polygon points="14,92 44,40 74,92" fill="#2b6b5a"/><g transform="rotate(-7 50 50)"><rect x="22" y="22" width="62" height="40" fill="#fffaf0"/><rect x="30" y="30" width="34" height="5" fill="#2a2118"/><rect x="30" y="40" width="46" height="4" fill="#c4492b"/></g><rect x="62" y="14" width="22" height="7" fill="#a8cdd6" opacity=".9" transform="rotate(8 70 18)"/>'},
+ {file:'02-vector-geometry.html',name:'هندسه',sub:'بائوهاوس و رنگ‌های اصلی',bg:'#f2eee3',fg:'#121212',c:'#f5c518',ff:"900 1em 'Kenaar','Peyda',sans-serif",
+  art:'<circle cx="42" cy="48" r="32" fill="#f5c518"/><path d="M100 0V60A60 60 0 0 1 40 0Z" fill="#2347c5"/><polygon points="52,100 100,100 76,60" fill="#e8402a"/><rect x="0" y="82" width="46" height="8" fill="#121212"/>'},
+ {file:'03-neon-terminal.html',name:'نئون',sub:'ترمینال و HUD',bg:'#070812',fg:'#dff9ff',c:'#19f0ff',ff:"900 1em 'Abar','Peyda',sans-serif",
+  art:'<g stroke="#19f0ff" stroke-opacity=".45" stroke-width=".6"><path d="M0 70H100M0 78H100M0 88H100M0 100H100M50 60V100M30 60L-10 100M70 60L110 100"/></g><circle cx="50" cy="34" r="18" fill="#ff2bd6" opacity=".85"/><g stroke="#070812" stroke-width="2"><path d="M30 28H70M30 36H70M30 44H70"/></g><rect x="10" y="10" width="26" height="4" fill="#19f0ff"/><rect x="10" y="17" width="14" height="4" fill="#f4ff3a"/>'},
+ {file:'04-pop-comic.html',name:'کمیک',sub:'پنل و بادکنک',bg:'#ffd400',fg:'#111',c:'#ed1c24',ff:"400 1em 'Lalezar','Peyda',sans-serif",fw:400,
+  art:'<polygon points="50,6 58,28 80,16 74,40 98,46 76,58 90,80 64,72 56,96 46,74 22,90 28,64 4,56 28,44 12,22 38,30" fill="#ed1c24" stroke="#111" stroke-width="3" stroke-linejoin="round"/><g fill="#111" opacity=".25"><circle cx="12" cy="88" r="2"/><circle cx="20" cy="88" r="2"/><circle cx="28" cy="88" r="2"/><circle cx="16" cy="94" r="2"/><circle cx="24" cy="94" r="2"/></g><ellipse cx="50" cy="48" rx="16" ry="11" fill="#fff" stroke="#111" stroke-width="3"/>'},
+ {file:'05-notebook.html',name:'دفترچه',sub:'خط‌کشی و برچسب',bg:'#fffdf3',fg:'#1f4e8c',c:'#e2796d',ff:"400 1em 'Dastan','Peyda',sans-serif",fw:400,
+  art:'<g stroke="#a9c4cf" stroke-width="1"><path d="M0 16H100M0 28H100M0 40H100M0 52H100M0 64H100M0 76H100M0 88H100"/></g><path d="M78 0V100" stroke="#e2796d" stroke-width="1.6"/><rect x="18" y="20" width="36" height="30" fill="#fff08a" transform="rotate(-5 36 35)"/><path d="M24 30H48M24 38H44" stroke="#1f4e8c" stroke-width="2"/><path d="M20 64C40 54 66 60 62 76" fill="none" stroke="#e2796d" stroke-width="2.4" stroke-linecap="round"/>'},
+ {file:'06-retro-gazette.html',name:'روزنامه',sub:'چاپ قدیمی و پرتوها',bg:'#e6e4d1',fg:'#1b2a41',c:'#e0a82e',ff:"800 1em 'Damavand','Peyda',sans-serif",fw:800,
+  art:'<g fill="#e0a82e"><path d="M50 50L0 20V0H24Z"/><path d="M50 50L40 0H64Z"/><path d="M50 50L80 0H100V24Z"/><path d="M50 50L100 46V70Z"/><path d="M50 50L100 100H76Z"/><path d="M50 50L36 100H12Z"/><path d="M50 50L0 74V50Z"/></g><circle cx="50" cy="50" r="28" fill="#2e7d7a" stroke="#1b2a41" stroke-width="3"/><rect x="34" y="44" width="32" height="5" fill="#f3f1e2"/><rect x="38" y="54" width="24" height="4" fill="#d1442e"/>'},
+ {file:'07-pixel-arcade.html',name:'آرکید',sub:'انتخاب مرحله',bg:'#0d1b2a',fg:'#eaf2ff',c:'#ffcc00',ff:"400 1em 'BlockSharp','Peyda',sans-serif",fw:400,
+  art:'<g shape-rendering="crispEdges"><g fill="#ffcc00"><rect x="38" y="20" width="8" height="8"/><rect x="54" y="20" width="8" height="8"/><rect x="30" y="28" width="40" height="8"/><rect x="30" y="36" width="40" height="8"/><rect x="38" y="44" width="24" height="8"/><rect x="30" y="52" width="8" height="8"/><rect x="62" y="52" width="8" height="8"/></g><g fill="#0d1b2a"><rect x="40" y="30" width="6" height="6"/><rect x="54" y="30" width="6" height="6"/></g><g fill="#ff4d6d"><rect x="8" y="78" width="8" height="8"/><rect x="84" y="12" width="8" height="8"/></g><g fill="#4cc9f0"><rect x="20" y="10" width="4" height="4"/><rect x="76" y="70" width="4" height="4"/><rect x="88" y="84" width="4" height="4"/></g></g>'},
+ {file:'08-line-gallery.html',name:'گالری خطی',sub:'درخت و خط نازک',bg:'#f6f5f1',fg:'#1c2326',c:'#d2452b',ff:"100 1em 'Pelak','Peyda',sans-serif",fw:300,
+  art:'<g stroke="#1c2326" stroke-width=".9" fill="none"><path d="M50 14L28 38M50 14L72 38M28 38L18 66M28 38L38 66M72 38L62 66M72 38L82 66"/><g fill="#f6f5f1"><circle cx="50" cy="14" r="6"/><circle cx="28" cy="38" r="5"/><circle cx="72" cy="38" r="5"/><circle cx="18" cy="66" r="4"/><circle cx="38" cy="66" r="4"/><circle cx="62" cy="66" r="4"/></g><circle cx="82" cy="66" r="4" fill="#d2452b" stroke="#d2452b"/><path d="M10 88H90M10 84V92M90 84V92"/></g>'},
+ {file:'09-brutal-type.html',name:'تایپوگرافی',sub:'حروف درشت و خشن',bg:'#f4f4ef',fg:'#000',c:'#c6ff00',ff:"900 1em 'Sanat','Peyda',sans-serif",
+  art:'<rect x="0" y="0" width="100" height="100" fill="#c6ff00"/><rect x="0" y="16" width="100" height="18" fill="#000"/><rect x="0" y="40" width="72" height="18" fill="#000"/><rect x="0" y="64" width="100" height="18" fill="none" stroke="#000" stroke-width="3"/><circle cx="82" cy="49" r="12" fill="#f4f4ef" stroke="#000" stroke-width="3"/>'},
+ {file:'10-aurora-glass.html',name:'شفق',sub:'شیشه و نور',bg:'#0a1a30',fg:'#eafff8',c:'#7cf5d0',ff:"800 1em 'Abar','Peyda',sans-serif",fw:800,
+  art:'<defs><radialGradient id="g1"><stop offset="0" stop-color="#7cf5d0" stop-opacity=".9"/><stop offset="1" stop-color="#7cf5d0" stop-opacity="0"/></radialGradient><radialGradient id="g2"><stop offset="0" stop-color="#a58bff" stop-opacity=".9"/><stop offset="1" stop-color="#a58bff" stop-opacity="0"/></radialGradient></defs><circle cx="30" cy="30" r="50" fill="url(#g1)"/><circle cx="76" cy="66" r="52" fill="url(#g2)"/><rect x="18" y="34" width="64" height="34" rx="9" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".4"/><rect x="26" y="44" width="30" height="4" rx="2" fill="#fff" fill-opacity=".8"/><rect x="26" y="54" width="20" height="4" rx="2" fill="#fff" fill-opacity=".45"/>'}
+];
+const $=s=>document.querySelector(s);
+const fa=n=>Number(n).toLocaleString('fa-IR');
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const N=THEMES.length,STEP=360/N;
+const ORD=['اول','دوم','سوم','چهارم','پنجم','ششم','هفتم','هشتم','نهم','دهم'];
+const label=i=>`گروه‌بندی ${ORD[i]}`;
+const stage=$('#stage'),ring=$('#ring'),dots=$('#dots'),go=$('#go');
+const lum=c=>{const v=parseInt(c.slice(1),16);return(.299*(v>>16)+.587*((v>>8)&255)+.114*(v&255))/255;};
+ring.innerHTML=THEMES.map((t,i)=>`<div class="card" data-i="${i}" style="--bg2:${t.bg};--c-fg:${t.fg};--ff:${t.ff};--fw:${t.fw||900}"><span class="n">${fa(i+1)}</span><div class="art"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${t.art}</svg></div><div class="lab"><b>${label(i)}</b></div></div>`).join('');
+dots.innerHTML=THEMES.map((t,i)=>`<button type="button" data-i="${i}" aria-label="${label(i)}">${fa(i+1)}</button>`).join('');
+const cards=[...ring.children],dotEls=[...dots.children];
+const soon=new Set();
+let R=400,rot=0,target=0,active=-1,dragging=false,raf=0;
+function size(){
+  const w=cards[0].offsetWidth;R=Math.round((w/2)/Math.tan(Math.PI/N)*1.2);
+  cards.forEach((c,i)=>c.style.transform=`rotateY(${-i*STEP}deg) translateZ(${R}px)`);
+  paint();
+}
+var setActive=function(i){
+  active=i;const t=THEMES[i];
+  const root=document.documentElement.style;root.setProperty('--bg',t.bg);root.setProperty('--fg',t.fg);
+  document.getElementById('tc').content=t.bg;
+  const nm=$('#nm');nm.style.setProperty('--ff',t.ff);nm.style.setProperty('--fw',t.fw||900);
+  nm.textContent=label(i);nm.style.animation='none';void nm.offsetWidth;nm.style.animation='';
+  const g=$('#ghost');g.style.font=t.ff;g.style.fontSize='';g.innerHTML=`<span>${ORD[i]}</span>`;
+  dotEls.forEach((d,k)=>d.setAttribute('aria-current',String(k===i)));
+  refreshGo();
+};
+function refreshGo(){
+  if(active<0)return;
+  const dead=soon.has(active);
+  if(dead){go.removeAttribute('href');go.setAttribute('aria-disabled','true');go.textContent='به‌زودی';}
+  else{go.href=THEMES[active].file;go.removeAttribute('aria-disabled');go.textContent='ورود به صفحه';}
+}
+function paint(){
+  ring.style.transform=`translateZ(${-R}px) rotateY(${rot}deg)`;
+  cards.forEach((c,i)=>{const d=(((-i*STEP+rot)%360)+540)%360-180,f=Math.cos(d*Math.PI/180);c.style.opacity=(.12+.88*Math.pow(Math.max(0,f),.55)).toFixed(3);c.style.pointerEvents=Math.abs(d)<95?'auto':'none';});
+  const idx=((Math.round(rot/STEP)%N)+N)%N;if(idx!==active)setActive(idx);
+}
+let last=0;
+function tick(now){
+  raf=0;const dt=Math.min(64,last?now-last:16);last=now;
+  if(!dragging){const d=target-rot;if(Math.abs(d)<.04)rot=target;else rot+=d*(RM?1:1-Math.exp(-dt/95));}
+  paint();
+  if(dragging||rot!==target)raf=requestAnimationFrame(tick);else last=0;
+}
+const kick=()=>{if(!raf)raf=requestAnimationFrame(tick);};
+function goTo(i){const cur=Math.round(target/STEP);let d=(((i-cur)%N)+N)%N;if(d>N/2)d-=N;target+=d*STEP;kick();}
+function step(d){target=(Math.round(target/STEP)+d)*STEP;kick();}
+let sx=0,lx=0,lt=0,vx=0,moved=0,downCard=null;
+stage.addEventListener('pointerdown',e=>{if(e.button>0)return;dragging=true;moved=0;sx=lx=e.clientX;lt=performance.now();vx=0;downCard=e.target.closest('.card');stage.classList.add('drag');stage.setPointerCapture(e.pointerId);kick();});
+stage.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-lx,now=performance.now();moved+=Math.abs(dx);rot+=dx*.42;vx=dx/Math.max(1,now-lt);lx=e.clientX;lt=now;target=rot;});
+function release(){
+  if(!dragging)return;dragging=false;stage.classList.remove('drag');
+  if(moved<8&&downCard){const i=+downCard.dataset.i;if(i===active&&!soon.has(i))location.href=THEMES[i].file;else goTo(i);return;}
+  target=Math.round((rot+vx*90*.42)/STEP)*STEP;kick();
+}
+stage.addEventListener('pointerup',release);stage.addEventListener('pointercancel',release);
+let wheelT=0;
+stage.addEventListener('wheel',e=>{
+  const horiz=Math.abs(e.deltaX)>Math.abs(e.deltaY),d=horiz?e.deltaX:e.deltaY;
+  if(Math.abs(d)<8)return;e.preventDefault();
+  const n=performance.now();if(n-wheelT<260)return;wheelT=n;
+  step(horiz?(d>0?-1:1):(d>0?1:-1));
+},{passive:false});
+stage.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft'||e.key==='ArrowDown'){e.preventDefault();step(1);}
+  else if(e.key==='ArrowRight'||e.key==='ArrowUp'){e.preventDefault();step(-1);}
+  else if(e.key==='Home'){e.preventDefault();goTo(0);}
+  else if(e.key==='End'){e.preventDefault();goTo(N-1);}
+  else if(e.key==='Enter'&&!soon.has(active)){location.href=THEMES[active].file;}
+});
+dots.addEventListener('click',e=>{const b=e.target.closest('button');if(b)goTo(+b.dataset.i);});
+addEventListener('resize',size);
+size();
+if(!RM){rot=-4*360+0;target=0;kick();}else{rot=target=0;paint();}
+function status(){$('#status').textContent=`${fa(N-soon.size)} از ${fa(N)} صفحه منتشر شده`;}
+if(location.protocol==='file:')status();
+else Promise.all(THEMES.map((t,i)=>fetch(t.file,{method:'HEAD',cache:'no-store'}).then(r=>r.ok).catch(()=>false).then(ok=>{if(!ok){soon.add(i);cards[i].classList.add('soon');dotEls[i].classList.add('soon');}}))).then(()=>{status();refreshGo();});
+if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!RM){
+  const cur=$('#cur'),A=$('#curA'),B=$('#curB'),tx=$('#curTx');
+  let mx=-100,my=-100,rx=-100,ry=-100,loop=0,lastT=null,on=false;
+  const place=(el,x,y)=>el.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%)`;
+  function frame(){loop=0;rx+=(mx-rx)*.2;ry+=(my-ry)*.2;place(A,rx,ry);if(Math.abs(mx-rx)>.3||Math.abs(my-ry)>.3)loop=requestAnimationFrame(frame);}
+  function state(target){
+    lastT=target;
+    const card=target&&target.closest&&target.closest('.card');
+    let label='',btn=false;
+    if(card){const i=+card.dataset.i;label=i===active?(soon.has(i)?'به‌زودی':'ورود'):'بیا جلو';}
+    else if(target&&target.closest&&target.closest('#stage'))label='بکش';
+    else if(target&&target.closest&&target.closest('a,button'))btn=true;
+    tx.textContent=label;
+    cur.classList.toggle('lbl',!!label);cur.classList.toggle('btn',btn);
+  }
+  addEventListener('pointermove',e=>{
+    if(e.pointerType!=='mouse')return;
+    mx=e.clientX;my=e.clientY;place(B,mx,my);
+    if(!on){on=true;rx=mx;ry=my;document.body.classList.add('cursor-on');}
+    if(!loop)loop=requestAnimationFrame(frame);
+    if(e.target!==lastT)state(e.target);
+  },{passive:true});
+  addEventListener('pointerdown',e=>{if(e.button===0)cur.classList.add('down');});
+  addEventListener('pointerup',()=>cur.classList.remove('down'));
+  document.documentElement.addEventListener('pointerleave',()=>{on=false;document.body.classList.remove('cursor-on');});
+  let rt=0;const recheck=()=>{if(on)state(document.elementFromPoint(mx,my));};
+  const _set=setActive;setActive=function(i){_set(i);clearTimeout(rt);recheck();rt=setTimeout(recheck,450);};
+}
+</script>
+</body>
+</html>
