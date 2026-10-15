@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#d6c4a0">
 <title>ساختمان داده‌ها | گروه‌بندی تمرین اول</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="apple-touch-icon" href="assets/logo.png">
 <style>
 @font-face{font-family:"IRANYekanX";src:url("fonts/x ایران یکان/IRANYekanX Pro/Variable Font/webfont/IRANYekanXVF.woff2") format("woff2");font-weight:100 900;font-display:swap}
 @font-face{font-family:"Peyda";src:url("fonts/پیدا/PeydaWeb/woff2/PeydaWeb-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
@@ -122,16 +124,33 @@ html{scrollbar-gutter:auto}
 ::-webkit-scrollbar-thumb:hover{background:linear-gradient(90deg,#2f7a66 0 62%,#1f5445 62%)}
 ::-webkit-scrollbar-thumb:active{background:linear-gradient(90deg,#eba93a 0 62%,#c68a1c 62%)}
 ::-webkit-scrollbar-corner{background:#e8dcc0}
+.sb{display:none}
+@media(min-width:900px) and (hover:hover) and (pointer:fine){
+  html.js-sb{scrollbar-width:none}
+  html.js-sb::-webkit-scrollbar{display:none}
+  html.js-sb .sb{display:block;position:fixed;left:6px;top:12px;bottom:12px;width:30px;z-index:99990;touch-action:none;user-select:none;-webkit-user-select:none}
+  .sb-line{position:absolute;left:50%;top:0;bottom:0;translate:-50% 0;border-left:2px dashed rgba(42,33,24,.45)}
+  .sb-cut{position:absolute;left:50%;top:0;width:3px;translate:-50% 0;height:var(--prog,0px);background:var(--rust);border-radius:2px;opacity:.85}
+  .sb-thumb{position:absolute;left:50%;top:0;width:22px;height:var(--th,80px);translate:-50% 0;transform:translateY(var(--ty,0px));filter:drop-shadow(2px 3px 0 rgba(60,40,15,.3));touch-action:none}
+  .sb-paper{position:absolute;inset:0;background:linear-gradient(90deg,#e0603f 0 62%,#a93a1f 62%);clip-path:polygon(0 0,100% 2%,88% 8%,100% 14%,88% 20%,100% 26%,88% 32%,100% 38%,88% 44%,100% 50%,88% 56%,100% 62%,88% 68%,100% 74%,88% 80%,100% 86%,88% 92%,100% 98%,0 100%,12% 94%,0 88%,12% 82%,0 76%,12% 70%,0 64%,12% 58%,0 52%,12% 46%,0 40%,12% 34%,0 28%,12% 22%,0 16%,12% 10%);transition:background .25s}
+  .sb-paper::before{content:"";position:absolute;left:50%;top:14px;bottom:14px;translate:-50% 0;border-left:2px dashed rgba(255,250,240,.7)}
+  .sb-paper::after{content:"";position:absolute;left:3px;right:3px;top:0;height:7px;background:rgba(255,250,240,.35)}
+  .sb-thumb:hover .sb-paper{background:linear-gradient(90deg,#3a8a73 0 62%,#1f5445 62%)}
+  .sb.drag .sb-paper{background:linear-gradient(90deg,#f0b448 0 62%,#c68a1c 62%)}
+  .sb-icon{position:absolute;left:50%;top:50%;width:14px;height:14px;translate:-50% -50%;fill:none;stroke:#fffaf0;stroke-width:1.8;stroke-linecap:round;pointer-events:none}
+  .sb-tip{position:absolute;left:34px;top:0;transform:translateY(calc(var(--ty,0px) + var(--th,80px)/2 - 50%));background:var(--sheet);color:var(--ink);font:800 13px 'Peyda',sans-serif;padding:3px 12px;box-shadow:3px 3px 0 rgba(60,40,15,.3);opacity:0;pointer-events:none;white-space:nowrap;transition:opacity .2s;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,0 62%,-8px 50%,0 38%)}
+  .sb:hover .sb-tip,.sb.drag .sb-tip{opacity:1}
+}
 .sc,#cutfx{display:none}
 @media(hover:hover) and (pointer:fine){
   body.sc-on,body.sc-on *{cursor:none!important}
   body.sc-on.sc-native,body.sc-on.sc-native *{cursor:text!important}
-  .sc{display:block;position:fixed;left:0;top:0;width:64px;height:64px;z-index:100001;pointer-events:none;transform-origin:0 0;opacity:0;transition:opacity .2s;will-change:transform;filter:drop-shadow(2px 3px 0 rgba(60,40,15,.35))}
+  .sc{display:block;position:fixed;left:0;top:0;width:72px;height:64px;z-index:100001;pointer-events:none;transform-origin:0 0;opacity:0;transition:opacity .2s;will-change:transform;filter:drop-shadow(2px 3px 0 rgba(60,40,15,.35))}
   body.sc-on .sc{opacity:1}
   body.sc-on.sc-native .sc{opacity:0}
   .sc svg{display:block;overflow:visible}
-  .sc .ba{transform-origin:26px 32px;transform:rotate(calc(var(--o,10)*-1deg))}
-  .sc .bb{transform-origin:26px 32px;transform:rotate(calc(var(--o,10)*1deg))}
+  .sc .ba{transform-origin:28px 32px;transform:rotate(calc(var(--o,18)*-1deg))}
+  .sc .bb{transform-origin:28px 32px;transform:rotate(calc(var(--o,18)*1deg))}
 }
 #cutfx{position:fixed;inset:0;width:100%;height:100%;z-index:100000;pointer-events:none}
 body.fx #cutfx{display:block}
@@ -154,12 +173,10 @@ body.fx #cutfx{display:block}
 </head>
 <body>
 <a class="skip" href="#groups">رفتن به گروه‌ها</a>
-
 <header class="top">
   <div class="brand"><img src="assets/logo.png" alt="" width="42" height="42" onerror="this.remove()"><span>درس ساختمان داده‌ها</span></div>
   <a class="back" href="index.html">همه گروه‌بندی‌ها</a>
 </header>
-
 <section class="hero" id="hero" aria-labelledby="t">
   <div class="diorama" aria-hidden="true">
     <div class="layer sun"><i id="sunShape"></i></div>
@@ -184,23 +201,31 @@ body.fx #cutfx{display:block}
   </div>
   <div class="title-sheet-wrap"></div>
 </section>
-
 <section class="finder" aria-label="جست‌وجو">
   <label class="tape-input"><span>جست‌وجو</span><input id="q" type="search" placeholder="نام دانشجو یا دستیار آموزشی" autocomplete="off"></label>
   <span class="count" id="count" aria-live="polite"></span>
 </section>
-
 <main class="board" id="groups"></main>
 <p class="empty" id="empty" role="status" hidden>چیزی پیدا نشد. نام را کوتاه‌تر بنویسید یا جست‌وجو را پاک کنید.</p>
-
 <footer class="foot"><span></span><span>Design by ATLAS</span></footer>
 <div class="sc" id="sc" aria-hidden="true">
-  <svg viewBox="0 0 64 64" width="64" height="64">
-    <g class="ba"><path d="M18 28.4 62 32 18 35.6z" fill="#eef2f3" stroke="#2a2118" stroke-width=".9" stroke-linejoin="round"/><path d="M12 32H24" stroke="#2a2118" stroke-width="3" stroke-linecap="round"/><circle cx="6.5" cy="32" r="5.6" fill="none" stroke="#c4492b" stroke-width="3.2"/></g>
-    <g class="bb"><path d="M18 28.4 62 32 18 35.6z" fill="#dfe6e8" stroke="#2a2118" stroke-width=".9" stroke-linejoin="round"/><path d="M12 32H24" stroke="#2a2118" stroke-width="3" stroke-linecap="round"/><circle cx="6.5" cy="32" r="5.6" fill="none" stroke="#2b6b5a" stroke-width="3.2"/></g>
-    <circle cx="26" cy="32" r="2.6" fill="#2a2118"/>
+  <svg viewBox="0 0 72 64" width="72" height="64">
+    <g class="ba">
+      <path d="M17 26.5C33 25 52 28.5 68 32 52 34.5 34 36.5 17 37.5z" fill="#f4f7f8" stroke="#2a2118" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M21 29.2C37 28.6 51 30.6 62 32" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M13 32H25" stroke="#2a2118" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="7" cy="32" r="6.3" fill="none" stroke="#c4492b" stroke-width="3.6"/>
+    </g>
+    <g class="bb">
+      <path d="M17 26.5C33 25 52 28.5 68 32 52 34.5 34 36.5 17 37.5z" fill="#e1e8ea" stroke="#2a2118" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M21 29.2C37 28.6 51 30.6 62 32" fill="none" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity=".8"/>
+      <path d="M13 32H25" stroke="#2a2118" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="7" cy="32" r="6.3" fill="none" stroke="#2b6b5a" stroke-width="3.6"/>
+    </g>
+    <circle cx="28" cy="32" r="3.1" fill="#eba93a" stroke="#2a2118" stroke-width="1.2"/>
   </svg>
 </div>
+<div class="sb" id="sb" aria-hidden="true"><div class="sb-line"></div><div class="sb-cut"></div><div class="sb-thumb" id="sbThumb"><div class="sb-paper"></div><svg class="sb-icon" viewBox="0 0 16 16"><circle cx="4" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><path d="M5.2 10.4 11 2M10.8 10.4 5 2"/></svg></div><div class="sb-tip" id="sbTip"></div></div>
 <canvas id="cutfx" aria-hidden="true"></canvas>
 <script>
 (()=>{
@@ -212,6 +237,25 @@ body.fx #cutfx{display:block}
   const hero=$('#hero'),dio=hero.querySelector('.diorama');
   dio.insertAdjacentHTML('beforeend','<div class="title-sheet"><span class="cut"></span><h1 id="t">ساختمان داده‌ها</h1><p class="sub">گروه‌بندی دانشجویان<small>استاد درس: دکتر افسانه فاطمی</small></p></div>');
   dio.querySelector('.title-sheet').removeAttribute('aria-hidden');
+  (()=>{
+    const sb=document.getElementById('sb'),thumb=document.getElementById('sbThumb'),tip=document.getElementById('sbTip'),root=document.documentElement;
+    if(!sb||!thumb)return;
+    root.classList.add('js-sb');
+    const fa=n=>Number(n).toLocaleString('fa-IR');
+    let docH=1,vh=1,trackH=1,th=64,raf=0,dragging=false,y0=0,s0=0;
+    function measure(){vh=innerHeight;docH=Math.max(root.scrollHeight,vh+1);trackH=sb.clientHeight||1;th=Math.max(64,Math.min(trackH,trackH*vh/docH));sb.style.setProperty('--th',th.toFixed(1)+'px');}
+    function paint(){raf=0;const max=Math.max(1,docH-vh),p=Math.min(1,Math.max(0,scrollY/max)),ty=p*(trackH-th);sb.style.setProperty('--ty',ty.toFixed(1)+'px');sb.style.setProperty('--prog',(ty+th/2).toFixed(1)+'px');tip.textContent=fa(Math.round(p*100))+'٪';}
+    const req=()=>{if(!raf)raf=requestAnimationFrame(paint);};
+    addEventListener('scroll',req,{passive:true});
+    addEventListener('resize',()=>{measure();req();});
+    if('ResizeObserver' in window)new ResizeObserver(()=>{measure();req();}).observe(document.body);
+    measure();paint();
+    thumb.addEventListener('pointerdown',e=>{if(e.button!==0)return;e.preventDefault();dragging=true;y0=e.clientY;s0=scrollY;thumb.setPointerCapture(e.pointerId);sb.classList.add('drag');});
+    thumb.addEventListener('pointermove',e=>{if(!dragging)return;const k=(docH-vh)/Math.max(1,trackH-th);scrollTo({top:s0+(e.clientY-y0)*k,behavior:'instant'});});
+    const end=()=>{dragging=false;sb.classList.remove('drag');};
+    thumb.addEventListener('pointerup',end);thumb.addEventListener('pointercancel',end);
+    sb.addEventListener('pointerdown',e=>{if(e.button!==0||e.target.closest('.sb-thumb'))return;const r=sb.getBoundingClientRect(),p=(e.clientY-r.top-th/2)/Math.max(1,trackH-th);scrollTo({top:Math.max(0,Math.min(1,p))*(docH-vh),behavior:RM?'instant':'smooth'});});
+  })();
   if(RM)return;
   if(FINE){
     hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--px',((e.clientX-r.left)/r.width-.5).toFixed(3));hero.style.setProperty('--py',((e.clientY-r.top)/r.height-.5).toFixed(3));},{passive:true});
@@ -251,7 +295,7 @@ body.fx #cutfx{display:block}
   addEventListener('pointerdown',e=>{if(e.pointerType==='mouse')return;confetti(e.clientX,e.clientY,9,3.4);},{passive:true});
   if(!FINE)return;
   const sc=$('#sc'),body=document.body;
-  let mx=-200,my=-200,px=-200,py=-200,vx=0,vy=0,ang=-145,tAng=-145,open=10,tOpen=10;
+  let mx=-200,my=-200,px=-200,py=-200,vx=0,vy=0,ang=-145,tAng=-145,open=18,tOpen=18;
   let on=false,down=false,hover=false,lastMove=0,raf=0,lastTrail=0;
   const rad=Math.PI/180;
   function loop(now){
@@ -261,11 +305,11 @@ body.fx #cutfx{display:block}
     const sp=Math.hypot(vx,vy),idle=now-lastMove;
     if(sp>2.2)tAng=Math.atan2(vy,vx)/rad;else if(idle>1600)tAng=-145;
     let d=((tAng-ang+540)%360)-180;ang+=d*.2;
-    if(down)tOpen=0.6;
-    else if(sp>1.2)tOpen=6+Math.min(sp*1.2,20)*(.55+.45*Math.sin(now/52));
-    else tOpen=hover?20+3*Math.sin(now/180):10;
+    if(down)tOpen=0.8;
+    else if(sp>1.2)tOpen=12+Math.min(sp*1.1,15)*(.5+.5*Math.sin(now/52));
+    else tOpen=hover?30+3*Math.sin(now/170):18;
     open+=(tOpen-open)*(down?.6:.32);
-    sc.style.transform=`translate3d(${mx}px,${my}px,0) rotate(${ang.toFixed(1)}deg) scale(1.35) translate(-62px,-32px)`;
+    sc.style.transform=`translate3d(${mx}px,${my}px,0) rotate(${ang.toFixed(1)}deg) scale(1.4) translate(-68px,-32px)`;
     sc.style.setProperty('--o',open.toFixed(1));
     if(sp>1&&!down&&now-lastTrail>14){trail.push({x:mx,y:my,t:now});lastTrail=now;if(trail.length>60)trail.shift();kickFx();}
     if(on&&(idle<2200||Math.abs(open-tOpen)>.3||Math.abs(d)>.5||hover))raf=requestAnimationFrame(loop);
@@ -277,7 +321,7 @@ body.fx #cutfx{display:block}
     if(!on){on=true;px=mx;py=my;body.classList.add('sc-on');}
     const t=e.target instanceof Element?e.target:null;
     body.classList.toggle('sc-native',!!(t&&t.closest('input,textarea')));
-    hover=!!(t&&t.closest('.sheet,.back,.stamp,.count,.brand'));
+    hover=!!(t&&t.closest('.sheet,.back,.stamp,.count,.brand,.sb'));
     wake();
   },{passive:true});
   addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;down=true;confetti(e.clientX,e.clientY,14,4.2);wake();});
@@ -297,7 +341,6 @@ const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const norm=v=>String(v).normalize('NFC').replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/\u200c/g,' ').replace(/ي/g,'ی').replace(/ك/g,'ک').replace(/\s+/g,' ').toLocaleLowerCase('fa-IR').trim();
 const collator=new Intl.Collator('fa',{sensitivity:'base',ignorePunctuation:true});
 const SORTED=GROUPS.map(g=>[...g.students].sort(collator.compare));
-
 function filterGroups(q){
   const n=norm(q),out=[];
   GROUPS.forEach((g,i)=>{
