@@ -93,7 +93,7 @@ h2{margin:0;font:900 clamp(40px,5vw,72px)/1 'Kenaar','Peyda','IRANYekanX',sans-s
 .b-roster li:hover{background-size:100% 100%;color:var(--bg)}
 mark{background:var(--mkb);color:var(--mkf);padding:0 4px}
 .empty{padding:60px 20px;text-align:center;font:900 28px 'Kenaar','Peyda',sans-serif;border-bottom:4px solid var(--ink);background:var(--yellow)}
-.foot{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:20px clamp(14px,4vw,48px) max(20px,env(safe-area-inset-bottom));background:var(--ink);color:var(--paper);font:700 14px 'Peyda',sans-serif}
+.foot{display:flex;justify-content:flex-end;gap:14px;flex-wrap:wrap;padding:20px clamp(14px,4vw,48px) max(20px,env(safe-area-inset-bottom));background:var(--ink);color:var(--paper);font:700 14px 'Peyda',sans-serif}
 @media(min-width:1000px){
   .band{position:sticky;top:calc(var(--sticky,0px) + var(--k)*14px);box-shadow:0 -4px 0 var(--ink)}
 }
@@ -127,30 +127,54 @@ mark{background:var(--mkb);color:var(--mkf);padding:0 4px}
   .cu.down .cu-ring{scale:.65}
   #fx{display:block;position:fixed;inset:0;width:100%;height:100%;z-index:100000;pointer-events:none}
 }
+.geo-m,.b-bar,.fab{display:none}
+.pal button[aria-current="true"]{box-shadow:inset 0 -9px 0 var(--ink)}
 @media(max-width:999px){
-  .poster{grid-template-columns:1fr;min-height:min(86svh,720px)}
+  .geo{display:none}
+  .geo-m{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+  .poster{grid-template-columns:1fr;min-height:min(88svh,740px)}
   .poster-text{justify-content:flex-end}
-  .band{grid-template-columns:minmax(120px,30%) minmax(0,1fr);min-height:0}
+  .pal{position:sticky;top:0;z-index:40}
+  .band{grid-template-columns:minmax(120px,30%) minmax(0,1fr);min-height:0;scroll-margin-top:var(--palh,0px)}
   .b-info{border-inline-end:0}
   .b-roster{grid-column:1/-1;border-top:4px solid var(--ink);grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .band[data-rv]{clip-path:inset(0 0 calc(100% - 4px) 0)}
+  .band[data-rv].in{clip-path:inset(-60px);transition:clip-path .9s cubic-bezier(.7,0,.2,1)}
+  .fab{display:grid;place-items:center;position:fixed;left:14px;bottom:max(16px,env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:var(--yellow);border:4px solid var(--ink);box-shadow:4px 4px 0 var(--ink);z-index:60;opacity:0;pointer-events:none;transform:scale(.5) rotate(-40deg);transition:opacity .25s,transform .4s cubic-bezier(.2,1.8,.4,1)}
+  .fab.show{opacity:1;pointer-events:auto;transform:none}
+  .fab:active{box-shadow:1px 1px 0 var(--ink);translate:3px 3px}
+  .fab svg{width:22px;height:22px}
 }
 @media(max-width:620px){
-  .band{grid-template-columns:1fr}
-  .b-shape{height:150px;border-inline-end:0;border-bottom:4px solid var(--ink);padding:10px}
-  .shape{width:auto;height:100%}
-  .b-num{font-size:110px}
+  h1{font-size:clamp(66px,19.5vw,112px)}
+  .band{display:block}
+  .b-shape{position:relative;display:block;height:220px;padding:0;border-inline-end:0;border-bottom:0}
+  .shape{position:absolute;left:-34px;top:50%;width:250px;height:250px;margin-top:-125px}
+  .b-num{inset:0 auto 0 -4px;width:222px;font-size:176px}
+  .b-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:var(--palh,56px);z-index:20;padding:2px 16px;background:var(--bg);color:var(--fg);border-block:4px solid var(--ink);font:900 clamp(30px,9vw,40px)/1.35 'Kenaar','Peyda',sans-serif}
+  .bc{font:900 13px/1.8 'Peyda',sans-serif;background:var(--fg);color:var(--bg);padding:0 12px;white-space:nowrap}
+  .b-info{display:block;padding:20px 16px 6px}
+  .b-info h2{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .cnt{display:none}
+  .tas{flex-direction:row;flex-wrap:wrap;gap:14px 12px}
+  .tas li{font-size:16px;padding:3px 16px 3px 12px}
+  .b-roster{border-top:0;grid-template-columns:minmax(0,1fr);padding:6px 16px 28px}
+  .b-roster li{font-size:17px;padding:9px 6px}
+  .b-roster li::after{content:"";margin-inline-start:auto;flex:none;width:12px;height:12px;background:currentColor;align-self:center}
+  .b-roster li:nth-child(3n+1)::after{border-radius:50%}
+  .b-roster li:nth-child(3n)::after{clip-path:polygon(50% 0,100% 100%,0 100%)}
   .pal button{padding:10px 2px 8px}.pal button small{display:none}
   .tools{flex-direction:column}
   .count{padding:10px;border-inline-start:0;border-top:4px solid var(--ink)}
   .meta{margin-top:18px}
   .back{padding:4px 12px;font-size:13px;box-shadow:4px 4px 0 var(--ink)}
 }
+@media(hover:none){.b-roster li:active{background-size:100% 100%;color:var(--bg)}}
 @media(prefers-reduced-motion:reduce){.sh,.ticker div,.count.bump{animation:none}.sh{transition:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 <a class="skip" href="#groups">رفتن به گروه‌ها</a>
-
 <header class="bar">
   <b><i aria-hidden="true"></i>درس ساختمان داده‌ها</b>
   <a class="back" href="index.html">همه گروه‌بندی‌ها</a>
@@ -167,6 +191,16 @@ mark{background:var(--mkb);color:var(--mkf);padding:0 4px}
     <g class="sh" style="--d:-18;--rk:-.05;--t:1s;--fx:-300px;--fy:-400px;--fr:60deg" stroke="#121212" stroke-width="8"><path d="M560 60H760M560 92H760M560 124H760" fill="none"/></g>
     <g class="sh" style="--d:24;--rk:.3;--t:1.1s;--fx:300px;--fy:-400px;--fr:-200deg"><path d="M40 540h30v-30h30v30h30v30h-30v30h-30v-30h-30z" fill="#121212"/></g>
   </svg>
+  <svg class="geo-m" viewBox="0 0 400 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g class="sh" style="--rk:.1;--t:.05s;--fx:-400px;--fy:-100px;--fr:-40deg"><path d="M0 0H300A300 300 0 0 1 0 300Z" fill="#2677C9"/></g>
+    <g class="sh" style="--rk:.05;--t:.2s;--fx:400px;--fy:200px;--fr:90deg"><circle cx="255" cy="215" r="150" fill="#F5C518"/></g>
+    <g class="sh" style="--rk:-.08;--t:.35s;--fx:0px;--fy:500px;--fr:30deg"><polygon points="20,640 380,640 200,330" fill="#D93636"/></g>
+    <g class="sh" style="--rk:.15;--t:.5s;--fx:-300px;--fy:-300px;--fr:120deg"><rect x="40" y="330" width="90" height="90" fill="#D94E9A" transform="rotate(45 85 375)"/></g>
+    <g class="sh" style="--rk:-.1;--t:.65s;--fx:300px;--fy:-300px;--fr:-120deg"><path d="M250 90A62 62 0 0 1 374 90Z" fill="#27834A"/></g>
+    <g class="sh" style="--rk:0;--t:.8s;--fx:-300px;--fy:0px;--fr:0deg" stroke="#121212" stroke-width="8"><path d="M30 70H190M30 98H190M30 126H190" fill="none"/></g>
+    <g class="sh" style="--rk:.2;--t:.95s;--fx:300px;--fy:300px;--fr:200deg"><circle cx="338" cy="300" r="42" fill="#fffdf7" stroke="#121212" stroke-width="9"/><circle cx="338" cy="300" r="10" fill="#121212"/></g>
+    <g class="sh" style="--rk:.3;--t:1.1s;--fx:-200px;--fy:300px;--fr:-200deg"><path d="M312 436h20v-20h20v20h20v20h-20v20h-20v-20h-20z" fill="#121212"/></g>
+  </svg>
   <div class="poster-text">
     <h1 id="t"><span>ساختمان</span><span>داده‌ها</span></h1>
     <p class="meta"><em>گروه‌بندی تمرین دوم</em><br>استاد درس: دکتر افسانه فاطمی</p>
@@ -180,7 +214,8 @@ mark{background:var(--mkb);color:var(--mkf);padding:0 4px}
 </section>
 <main id="groups"></main>
 <p class="empty" id="empty" role="status" hidden>نتیجه‌ای پیدا نشد. عبارت را کوتاه‌تر کنید.</p>
-<footer class="foot"><span></span><span>Designed by ATLAS</span></footer>
+<footer class="foot"><span>Designed by ATLAS</span></footer>
+<button class="fab" id="fab" type="button" aria-label="بازگشت به بالا"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4 21 20H3z" fill="#121212"/></svg></button>
 <div class="sb" id="sb" aria-hidden="true"><div class="sb-line"></div><div class="sb-ticks"></div><div class="sb-thumb" id="sbThumb"></div><div class="sb-tip" id="sbTip"></div></div>
 <div class="cu" id="cu" aria-hidden="true"><i class="w" id="wRing"><i class="cu-ring"></i></i><i class="w" id="wDot"><i class="cu-dot"></i></i><i class="w" id="wTri"><i class="cu-tri"></i></i></div>
 <canvas id="fx" aria-hidden="true"></canvas>
@@ -201,9 +236,26 @@ mark{background:var(--mkb);color:var(--mkf);padding:0 4px}
     build();let rt=0;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(build,150);});
     if(document.fonts&&document.fonts.ready)document.fonts.ready.then(build);
   })();
+
   const bar=$('.bar');
   const setSticky=()=>root.style.setProperty('--sticky',(bar.offsetHeight-4)+'px');
   setSticky();addEventListener('resize',setSticky);
+  const palEl=$('#pal'),fab=$('#fab');
+  const setPal=()=>root.style.setProperty('--palh',(palEl.offsetHeight||56)+'px');
+  setPal();addEventListener('resize',setPal);
+  if('ResizeObserver' in window)new ResizeObserver(setPal).observe(palEl);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(setPal);
+  fab.addEventListener('click',()=>scrollTo({top:0,behavior:RM?'instant':'smooth'}));
+  const fabTick=()=>fab.classList.toggle('show',scrollY>700);
+  addEventListener('scroll',fabTick,{passive:true});fabTick();
+  let spinWait=false;
+  const spin=()=>{spinWait=false;const h=innerHeight;document.querySelectorAll('.shape').forEach(el=>{const r=el.getBoundingClientRect();if(r.bottom<0||r.top>h)return;el.style.setProperty('--rot',((r.top/h)*140).toFixed(1)+'deg');});};
+  if(!RM){
+    addEventListener('scroll',()=>{if(!spinWait){spinWait=true;requestAnimationFrame(spin);}},{passive:true});
+    addEventListener('resize',spin);
+  }
+  addEventListener('bands',()=>{setPal();if(!RM)spin();});
+
   const poster=$('#poster');
   if(!RM){
     if(FINE){
@@ -213,6 +265,7 @@ mark{background:var(--mkb);color:var(--mkf);padding:0 4px}
     let tick=false;
     addEventListener('scroll',()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{tick=false;if(scrollY<innerHeight*1.4)poster.style.setProperty('--sr',scrollY.toFixed(0));});},{passive:true});
   }
+
   if(FINE){
     const sb=$('#sb'),thumb=$('#sbThumb'),tip=$('#sbTip');
     root.classList.add('js-sb');
@@ -236,6 +289,7 @@ mark{background:var(--mkb);color:var(--mkf);padding:0 4px}
     sb.addEventListener('pointerdown',e=>{if(e.button!==0||e.target.closest('.sb-thumb'))return;const r=sb.getBoundingClientRect(),p=(e.clientY-r.top-th/2)/Math.max(1,trackH-th);scrollTo({top:Math.max(0,Math.min(1,p))*(docH-vh),behavior:RM?'instant':'smooth'});});
   }
   if(RM)return;
+
   const cv=$('#fx'),ctx=cv.getContext('2d');
   let W=0,H=0;
   const size=()=>{const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);};
@@ -259,6 +313,7 @@ mark{background:var(--mkb);color:var(--mkf);padding:0 4px}
   }
   addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;burst(e.clientX,e.clientY,e.pointerType==='mouse'?14:9,4);},{passive:true});
   if(!FINE)return;
+
   const cu=$('#cu'),ring=$('#wRing'),dot=$('#wDot'),tri=$('#wTri'),body=document.body;
   let mx=-100,my=-100,rx=-100,ry=-100,on=false,loop=0;
   const put=(el,x,y)=>el.style.transform=`translate3d(${x}px,${y}px,0)`;
@@ -318,13 +373,25 @@ const SHAPES=[
   (a,b)=>`<path d="M4 96V4A92 92 0 0 1 96 96Z" fill="${a}"/><circle cx="34" cy="64" r="14" fill="${b}"/>`
 ];
 const wrap=$('#groups'),pal=$('#pal');
+const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:0,rootMargin:'0px 0px -3% 0px'}):null;
+function reveal(root){root.querySelectorAll('[data-rv]:not(.in)').forEach(el=>{if(!io||RM)el.classList.add('in');else io.observe(el);});}
+let spy=null;
+function watch(){
+  if(spy)spy.disconnect();
+  if(!('IntersectionObserver' in window))return;
+  spy=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;pal.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',String(b.dataset.g===e.target.id.slice(1))));}),{rootMargin:'-45% 0px -50% 0px'});
+  wrap.querySelectorAll('.band').forEach(b=>spy.observe(b));
+}
 function render(res,q){
   wrap.innerHTML=res.map(({g,i,students},k)=>{
     const c=i%6,[s1,s2]=SHAPE_FILL[c];
-    return `<article class="band g${c}" id="g${i}" style="--k:${Math.min(k,5)}"><div class="b-shape"><svg class="shape" viewBox="0 0 100 100" aria-hidden="true">${SHAPES[c](s1,s2)}</svg><span class="b-num" aria-hidden="true">${fa(i+1)}</span></div><div class="b-info"><h2>${esc(g.title)}</h2><ul class="tas" aria-label="دستیاران آموزشی">${g.tas.map((t,j)=>`<li class="${j?'b':'a'}"><span>${hl(t,q)}</span></li>`).join('')}</ul><p class="cnt"><b>${fa(students.length)} دانشجو</b></p></div><ol class="b-roster">${students.map(s=>`<li>${hl(s,q)}</li>`).join('')}</ol></article>`;
+    return `<article class="band g${c}" id="g${i}" data-rv style="--k:${Math.min(k,5)}"><div class="b-shape"><svg class="shape" viewBox="0 0 100 100" aria-hidden="true">${SHAPES[c](s1,s2)}</svg><span class="b-num" aria-hidden="true">${fa(i+1)}</span></div><div class="b-bar" aria-hidden="true"><span>${esc(g.title)}</span><span class="bc">${fa(students.length)} دانشجو</span></div><div class="b-info"><h2>${esc(g.title)}</h2><ul class="tas" aria-label="دستیاران آموزشی">${g.tas.map((t,j)=>`<li class="${j?'b':'a'}"><span>${hl(t,q)}</span></li>`).join('')}</ul><p class="cnt"><b>${fa(students.length)} دانشجو</b></p></div><ol class="b-roster">${students.map(s=>`<li>${hl(s,q)}</li>`).join('')}</ol></article>`;
   }).join('');
   pal.innerHTML=res.map(({g,i})=>`<button type="button" data-g="${i}" style="--c:${COLORS[i%6]};--cf:${LABEL_FG[i%6]}" aria-label="رفتن به ${esc(g.title)}">${fa(i+1)}<small>${esc(g.title)}</small></button>`).join('');
   pal.style.display=res.length?'':'none';
+  reveal(wrap);
+  watch();
+  window.dispatchEvent(new Event('bands'));
 }
 pal.addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b)return;

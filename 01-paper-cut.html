@@ -115,7 +115,7 @@ li{counter-increment:n;display:flex;gap:12px;align-items:baseline;border-bottom:
 li::before{content:counter(n,persian);font:900 13px 'Peyda',sans-serif;color:var(--num,var(--rust));min-width:22px}
 li:hover{background-size:100% 100%;padding-inline-start:10px}
 .empty{max-width:480px;margin:0 auto 60px;background:var(--sheet);padding:22px 26px;text-align:center;font:700 17px 'Peyda',sans-serif;transform:rotate(-1deg);box-shadow:5px 6px 0 rgba(60,40,15,.25)}
-.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:44px clamp(16px,4vw,56px) max(34px,env(safe-area-inset-bottom));background:#2a2118;color:#f0e4c8;font:600 14px 'Peyda','IRANYekanX',sans-serif;clip-path:polygon(0 12px,6% 3px,13% 11px,21% 2px,30% 10px,39% 1px,48% 11px,58% 3px,67% 12px,77% 2px,86% 10px,94% 3px,100% 11px,100% 100%,0 100%)}
+.foot{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap;padding:44px clamp(16px,4vw,56px) max(34px,env(safe-area-inset-bottom));background:#2a2118;color:#f0e4c8;font:600 14px 'Peyda','IRANYekanX',sans-serif;clip-path:polygon(0 12px,6% 3px,13% 11px,21% 2px,30% 10px,39% 1px,48% 11px,58% 3px,67% 12px,77% 2px,86% 10px,94% 3px,100% 11px,100% 100%,0 100%)}
 html{scrollbar-gutter:auto}
 @supports (-moz-appearance:none){html{scrollbar-color:#c4492b #e8dcc0;scrollbar-width:auto}}
 ::-webkit-scrollbar{width:16px;height:16px}
@@ -207,7 +207,7 @@ body.fx #cutfx{display:block}
 </section>
 <main class="board" id="groups"></main>
 <p class="empty" id="empty" role="status" hidden>چیزی پیدا نشد. نام را کوتاه‌تر بنویسید یا جست‌وجو را پاک کنید.</p>
-<footer class="foot"><span></span><span>Designed by ATLAS</span></footer>
+<footer class="foot"><span>Designed by ATLAS</span></footer>
 <div class="sc" id="sc" aria-hidden="true">
   <svg viewBox="0 0 72 64" width="72" height="64">
     <g class="ba">
@@ -232,11 +232,14 @@ body.fx #cutfx{display:block}
   const $=s=>document.querySelector(s);
   const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
   const FINE=matchMedia('(hover:hover) and (pointer:fine)').matches;
+
   (()=>{const n=44,p=[];for(let k=0;k<n*2;k++){const a=Math.PI*k/n,r=k%2?45:50;p.push((50+Math.sin(a)*r).toFixed(1)+'% '+(50-Math.cos(a)*r).toFixed(1)+'%');}
     $('#sunShape').style.clipPath='polygon('+p.join(',')+')';})();
+
   const hero=$('#hero'),dio=hero.querySelector('.diorama');
-  dio.insertAdjacentHTML('beforeend','<div class="title-sheet"><span class="cut"></span><h1 id="t">ساختمان داده‌ها</h1><p class="sub">گروه‌بندی دانشجویان<small>استاد درس: دکتر افسانه فاطمی</small></p></div>');
+  dio.insertAdjacentHTML('beforeend','<div class="title-sheet"><span class="cut"></span><h1 id="t">ساختمان داده‌ها</h1><p class="sub">گروه‌بندی تمرین اول<small>استاد درس: دکتر افسانه فاطمی</small></p></div>');
   dio.querySelector('.title-sheet').removeAttribute('aria-hidden');
+
   (()=>{
     const sb=document.getElementById('sb'),thumb=document.getElementById('sbThumb'),tip=document.getElementById('sbTip'),root=document.documentElement;
     if(!sb||!thumb)return;
@@ -257,12 +260,14 @@ body.fx #cutfx{display:block}
     sb.addEventListener('pointerdown',e=>{if(e.button!==0||e.target.closest('.sb-thumb'))return;const r=sb.getBoundingClientRect(),p=(e.clientY-r.top-th/2)/Math.max(1,trackH-th);scrollTo({top:Math.max(0,Math.min(1,p))*(docH-vh),behavior:RM?'instant':'smooth'});});
   })();
   if(RM)return;
+
   if(FINE){
     hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--px',((e.clientX-r.left)/r.width-.5).toFixed(3));hero.style.setProperty('--py',((e.clientY-r.top)/r.height-.5).toFixed(3));},{passive:true});
     hero.addEventListener('pointerleave',()=>{hero.style.setProperty('--px',0);hero.style.setProperty('--py',0);});
   }
   let tick=false;
   addEventListener('scroll',()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{tick=false;if(scrollY<innerHeight*1.3)hero.style.setProperty('--sy',scrollY.toFixed(0));});},{passive:true});
+
   const cv=$('#cutfx'),ctx=cv.getContext('2d');
   let dpr=1,W=0,H=0;
   const size=()=>{dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);};
@@ -292,8 +297,10 @@ body.fx #cutfx{display:block}
     if(trail.length||bits.length)fxRaf=requestAnimationFrame(fx);
   }
   function kickFx(){if(!fxRaf)fxRaf=requestAnimationFrame(fx);}
+
   addEventListener('pointerdown',e=>{if(e.pointerType==='mouse')return;confetti(e.clientX,e.clientY,9,3.4);},{passive:true});
   if(!FINE)return;
+
   const sc=$('#sc'),body=document.body;
   let mx=-200,my=-200,px=-200,py=-200,vx=0,vy=0,ang=-145,tAng=-145,open=18,tOpen=18;
   let on=false,down=false,hover=false,lastMove=0,raf=0,lastTrail=0;
