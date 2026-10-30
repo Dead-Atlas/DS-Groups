@@ -431,25 +431,20 @@ net.addEventListener('keydown',e=>{
 update();
 </script>
 <style>
-.bgm-neon{position:fixed;bottom:18px;inset-inline-start:18px;z-index:99995;display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(5,8,22,.92);border:1px solid var(--ac);color:var(--ac);font:700 12px var(--mono);direction:ltr;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));box-shadow:0 0 18px color-mix(in srgb,var(--ac) 25%,transparent);transition:border-color .4s,color .4s,box-shadow .4s}
-.bgm-neon button{border:1px solid var(--ac);background:transparent;color:var(--ac);padding:3px 9px;font:700 11px var(--mono);transition:all .2s}
-.bgm-neon button:hover,.bgm-neon button[aria-pressed="true"]{background:var(--ac);color:#05060f;box-shadow:0 0 10px var(--ac)}
-.bgm-neon .trk{max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--tx)}
-.eq{display:inline-flex;align-items:flex-end;gap:2px;height:12px}
+.bgm-neon{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:rgba(5,8,22,.9);border:1px solid var(--ac);color:var(--ac);font:700 12px var(--mono);direction:ltr;clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px));transition:border-color .4s,color .4s}
+.bgm-neon button{border:0;background:transparent;color:var(--ac);padding:1px 5px;font:700 12px var(--mono);transition:color .2s,text-shadow .2s}
+.bgm-neon button:hover,.bgm-neon button[aria-pressed="true"]{color:#36ff9b;text-shadow:0 0 8px #36ff9b}
+.bgm-neon .trk{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--tx);font-size:11px}
+.eq{display:inline-flex;align-items:flex-end;gap:2px;height:11px}
 .eq i{width:2px;height:3px;background:var(--ac);transition:height .2s}
 .bgm-neon.on .eq i{animation:eq .45s ease-in-out infinite alternate;background:#36ff9b}
 .bgm-neon.on .eq i:nth-child(2){animation-delay:.15s}
 .bgm-neon.on .eq i:nth-child(3){animation-delay:.3s}
-@keyframes eq{to{height:12px}}
-@media(max-width:1000px){.bgm-neon{bottom:78px}}
-@media(max-width:560px){.bgm-neon .trk{max-width:105px}}
+@keyframes eq{to{height:11px}}
+@media(max-width:720px){
+  .bgm-neon .trk{display:none}
+}
 </style>
-<div class="bgm-neon" id="bgmBar">
-  <span class="eq" aria-hidden="true"><i></i><i></i><i></i></span>
-  <button type="button" class="chip" id="bgmToggle" aria-pressed="false">PLAY</button>
-  <button type="button" class="chip" id="bgmNext" title="Next Track">&gt;&gt;</button>
-  <span class="trk" id="bgmTitle"></span>
-</div>
 <audio id="bgm" preload="auto"></audio>
 <script>
 (()=>{
@@ -459,7 +454,12 @@ update();
     {name:'The Weeknd - Starboy', file:'audio/03/The Weeknd - Starboy.flac'},
     {name:'Track 04', file:'audio/03/4_5816561573455471359.m4a'}
   ];
-  const bar=document.getElementById('bgmBar'),audio=document.getElementById('bgm'),btn=document.getElementById('bgmToggle'),nxt=document.getElementById('bgmNext'),ttl=document.getElementById('bgmTitle');
+  const hudR=document.querySelector('.hud-r');
+  const bar=document.createElement('div');bar.className='bgm-neon';bar.id='bgmBar';
+  bar.innerHTML='<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><button type="button" id="bgmToggle" aria-pressed="false">PLAY</button><button type="button" id="bgmNext" title="Next">&gt;&gt;</button><span class="trk" id="bgmTitle"></span>';
+  hudR.prepend(bar);
+
+  const audio=document.getElementById('bgm'),btn=document.getElementById('bgmToggle'),nxt=document.getElementById('bgmNext'),ttl=document.getElementById('bgmTitle');
   const encodePath=p=>p.split('/').map(s=>encodeURIComponent(s)).join('/');
   let idx=0,playing=false,triedAlt=false;
   audio.volume=0.4;
