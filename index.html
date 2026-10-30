@@ -224,5 +224,62 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!RM){
   const _set=setActive;setActive=function(i){_set(i);clearTimeout(rt);recheck();rt=setTimeout(recheck,450);};
 }
 </script>
+<style>
+.bgm-bar{position:fixed;bottom:46px;inset-inline-start:clamp(16px,4vw,56px);z-index:9000;display:inline-flex;align-items:center;gap:6px;padding:5px 8px 5px 14px;border-radius:999px;border:1.5px solid var(--fg);background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(8px);color:var(--fg);font:700 12px 'Peyda',sans-serif;transition:background .7s,color .7s,border-color .7s}
+.bgm-bar button{border:0;background:var(--fg);color:var(--bg);border-radius:999px;padding:4px 12px;font:800 12px 'Peyda',sans-serif;transition:transform .2s,background .7s,color .7s}
+.bgm-bar button:hover{transform:scale(1.07)}
+.bgm-bar .trk{max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;unicode-bidi:isolate;font-size:11px;opacity:.85;padding-inline:4px}
+@media(max-width:560px){.bgm-bar{bottom:42px}.bgm-bar .trk{max-width:110px}}
+</style>
+<div class="bgm-bar" id="bgmBar">
+  <button type="button" id="bgmToggle" aria-pressed="false">♪ پخش</button>
+  <button type="button" id="bgmNext" title="آهنگ بعدی">⏭</button>
+  <span class="trk" id="bgmTitle"></span>
+</div>
+<audio id="bgm" preload="auto"></audio>
+<script>
+(()=>{
+  const TRACKS=[
+    {name:'Glass Animals - Heat Waves', file:'audio/index/Heat Waves\u00a0 \u00a0Glass Animals.mp3', alt:'audio/index/Heat Waves   Glass Animals.mp3'},
+    {name:'Metro Boomin - Too Many Nights', file:'audio/index/Metro_Boomin,_Future,_Don_Toliver_Too_Many_Nights_feat_Don.m4a'},
+    {name:'C418 - Aria Math', file:'audio/index/Aria Math\u00a0 \u00a0C418.m4a', alt:'audio/index/Aria Math   C418.m4a'}
+  ];
+  const audio=document.getElementById('bgm'),btn=document.getElementById('bgmToggle'),nxt=document.getElementById('bgmNext'),ttl=document.getElementById('bgmTitle');
+  const encodePath=p=>p.split('/').map(s=>encodeURIComponent(s)).join('/');
+  let idx=0,playing=false,triedAlt=false;
+  audio.volume=0.4;
+
+  function load(i,playNow){
+    idx=(i+TRACKS.length)%TRACKS.length;triedAlt=false;
+    audio.src=encodePath(TRACKS[idx].file);
+    ttl.textContent=TRACKS[idx].name;
+    if(playNow)audio.play().then(()=>setUI(true)).catch(()=>{});
+  }
+  audio.addEventListener('error',()=>{
+    if(!triedAlt&&TRACKS[idx].alt){triedAlt=true;audio.src=encodePath(TRACKS[idx].alt);if(playing)audio.play().catch(()=>{});}
+  });
+  audio.addEventListener('ended',()=>load(idx+1,true));
+
+  function setUI(on){
+    playing=on;btn.setAttribute('aria-pressed',String(on));
+    btn.textContent=on?'❚❚ توقف':'♪ پخش';
+  }
+  btn.addEventListener('click',e=>{
+    e.stopPropagation();
+    if(playing){audio.pause();setUI(false);sessionStorage.setItem('bgm_mute','1');}
+    else{audio.play().then(()=>{setUI(true);sessionStorage.removeItem('bgm_mute');}).catch(()=>{});}
+  });
+  nxt.addEventListener('click',e=>{e.stopPropagation();sessionStorage.removeItem('bgm_mute');load(idx+1,true);});
+
+  load(0,false);
+  const unlock=e=>{
+    if(e.target&&e.target.closest&&e.target.closest('#bgmBar'))return;
+    if(sessionStorage.getItem('bgm_mute')==='1'){cleanup();return;}
+    audio.play().then(()=>{setUI(true);cleanup();}).catch(()=>{});
+  };
+  const cleanup=()=>{['pointerdown','keydown'].forEach(ev=>removeEventListener(ev,unlock));};
+  ['pointerdown','keydown'].forEach(ev=>addEventListener(ev,unlock,{passive:true}));
+})();
+</script>
 </body>
 </html>
