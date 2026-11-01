@@ -430,72 +430,18 @@ net.addEventListener('keydown',e=>{
 });
 update();
 </script>
-<style>
-.bgm-neon{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;background:rgba(5,8,22,.9);border:1px solid var(--ac);color:var(--ac);font:700 12px var(--mono);direction:ltr;clip-path:polygon(0 0,calc(100% - 9px) 0,100% 9px,100% 100%,9px 100%,0 calc(100% - 9px));transition:border-color .4s,color .4s}
-.bgm-neon button{border:0;background:transparent;color:var(--ac);padding:1px 5px;font:700 12px var(--mono);transition:color .2s,text-shadow .2s}
-.bgm-neon button:hover,.bgm-neon button[aria-pressed="true"]{color:#36ff9b;text-shadow:0 0 8px #36ff9b}
-.bgm-neon .trk{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--tx);font-size:11px}
-.eq{display:inline-flex;align-items:flex-end;gap:2px;height:11px}
-.eq i{width:2px;height:3px;background:var(--ac);transition:height .2s}
-.bgm-neon.on .eq i{animation:eq .45s ease-in-out infinite alternate;background:#36ff9b}
-.bgm-neon.on .eq i:nth-child(2){animation-delay:.15s}
-.bgm-neon.on .eq i:nth-child(3){animation-delay:.3s}
-@keyframes eq{to{height:11px}}
-@media(max-width:720px){
-  .bgm-neon .trk{display:none}
-}
-</style>
-<audio id="bgm" preload="auto"></audio>
-<script>
-(()=>{
-  const TRACKS=[
-    {name:'The Weeknd - Blinding Lights', file:'audio/03/1|9 - Blinding Lights - The Weeknd (320).mp3'},
-    {name:'Kavinsky - Nightcall', file:'audio/03/Nightcall\u00a0 \u00a0Kavinsky.mp3', alt:'audio/03/Nightcall   Kavinsky.mp3'},
-    {name:'The Weeknd - Starboy', file:'audio/03/The Weeknd - Starboy.flac'},
-    {name:'Track 04', file:'audio/03/4_5816561573455471359.m4a'}
-  ];
-  const hudR=document.querySelector('.hud-r');
-  const bar=document.createElement('div');bar.className='bgm-neon';bar.id='bgmBar';
-  bar.innerHTML='<span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><button type="button" id="bgmToggle" aria-pressed="false">PLAY</button><button type="button" id="bgmNext" title="Next">&gt;&gt;</button><span class="trk" id="bgmTitle"></span>';
-  hudR.prepend(bar);
-
-  const audio=document.getElementById('bgm'),btn=document.getElementById('bgmToggle'),nxt=document.getElementById('bgmNext'),ttl=document.getElementById('bgmTitle');
-  const encodePath=p=>p.split('/').map(s=>encodeURIComponent(s)).join('/');
-  let idx=0,playing=false,triedAlt=false;
-  audio.volume=0.4;
-
-  function load(i,playNow){
-    idx=(i+TRACKS.length)%TRACKS.length;triedAlt=false;
-    audio.src=encodePath(TRACKS[idx].file);
-    ttl.textContent=TRACKS[idx].name;
-    if(playNow)audio.play().then(()=>setUI(true)).catch(()=>{});
-  }
-  audio.addEventListener('error',()=>{
-    if(!triedAlt&&TRACKS[idx].alt){triedAlt=true;audio.src=encodePath(TRACKS[idx].alt);if(playing)audio.play().catch(()=>{});}
-  });
-  audio.addEventListener('ended',()=>load(idx+1,true));
-
-  function setUI(on){
-    playing=on;btn.setAttribute('aria-pressed',String(on));
-    bar.classList.toggle('on',on);
-    btn.textContent=on?'PAUSE':'PLAY';
-  }
-  btn.addEventListener('click',e=>{
-    e.stopPropagation();
-    if(playing){audio.pause();setUI(false);sessionStorage.setItem('bgm_mute','1');}
-    else{audio.play().then(()=>{setUI(true);sessionStorage.removeItem('bgm_mute');}).catch(()=>{});}
-  });
-  nxt.addEventListener('click',e=>{e.stopPropagation();sessionStorage.removeItem('bgm_mute');load(idx+1,true);});
-
-  load(0,false);
-  const unlock=e=>{
-    if(e.target&&e.target.closest&&e.target.closest('#bgmBar'))return;
-    if(sessionStorage.getItem('bgm_mute')==='1'){cleanup();return;}
-    audio.play().then(()=>{setUI(true);cleanup();}).catch(()=>{});
-  };
-  const cleanup=()=>{['pointerdown','keydown'].forEach(ev=>removeEventListener(ev,unlock));};
-  ['pointerdown','keydown'].forEach(ev=>addEventListener(ev,unlock,{passive:true}));
-})();
+<script type="module">
+import { initBGM } from './bgm.js';
+initBGM({
+  page: '03', skin: 'neon', volume: .4,
+  beatTargets: [".sun", ".root"],
+  css: '.sun{scale:calc(1 + var(--beat,0)*.05)} .root{scale:calc(1 + var(--beat,0)*.1)} @media(max-width:700px){.bgm{--bgm-bottom:84px}}',
+  tracks: [
+    { title:'Blinding Lights', artist:'The Weeknd', src:'audio/03/1-9-Blinding-Lights-The-Weeknd-320.mp3', alt:'audio/03/1|9 - Blinding Lights - The Weeknd (320).mp3' },
+    { title:'Nightcall', artist:'Kavinsky', src:'audio/03/Nightcall-Kavinsky.mp3', alt:'audio/03/Nightcall\u00a0 \u00a0Kavinsky.mp3' },
+    { title:'Starboy', artist:'The Weeknd', src:'audio/03/The-Weeknd-Starboy.mp3', alt:'audio/03/The Weeknd - Starboy.flac' }
+  ]
+});
 </script>
 </body>
 </html>

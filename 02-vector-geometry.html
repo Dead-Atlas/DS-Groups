@@ -416,67 +416,17 @@ document.addEventListener('keydown',e=>{
 });
 update();
 </script>
-<style>
-.bar-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.bgm-geo{display:inline-flex;align-items:stretch;background:var(--white);color:var(--ink);border:4px solid var(--ink);box-shadow:5px 5px 0 var(--ink);font:900 13px 'Peyda',sans-serif}
-.bgm-geo button{border:0;border-inline-end:4px solid var(--ink);background:var(--blue);color:var(--white);padding:4px 11px;font:900 13px 'Peyda',sans-serif;transition:background .15s,color .15s}
-.bgm-geo button:last-of-type{border-inline-end:0}
-.bgm-geo button:hover{background:var(--yellow);color:var(--ink)}
-.bgm-geo button[aria-pressed="true"]{background:var(--red);color:var(--white)}
-.bgm-geo .trk{display:flex;align-items:center;padding:0 10px;border-inline-start:4px solid var(--ink);max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;unicode-bidi:isolate;font-size:11px}
-@media(max-width:720px){
-  .bgm-geo{box-shadow:4px 4px 0 var(--ink)}
-  .bgm-geo button{padding:3px 9px;font-size:12px}
-  .bgm-geo .trk{display:none}
-}
-</style>
-<audio id="bgm" preload="auto"></audio>
-<script>
-(()=>{
-  const TRACKS=[
-    {name:'Tame Impala - Less I Know', file:'audio/02/The-Less-I-Know-The-Better-Tame-Impala-320.mp3'},
-    {name:'Daft Punk - Get Lucky', file:'audio/02/Get Lucky.mp3'}
-  ];
-  const hdr=document.querySelector('.bar'),back=hdr.querySelector('.back');
-  const wrap=document.createElement('div');wrap.className='bar-actions';
-  const bar=document.createElement('div');bar.className='bgm-geo';bar.id='bgmBar';
-  bar.innerHTML='<button type="button" id="bgmToggle" aria-pressed="false">♪</button><button type="button" id="bgmNext" title="آهنگ بعدی">⏭</button><span class="trk" id="bgmTitle"></span>';
-  hdr.insertBefore(wrap,back);wrap.append(bar,back);
-  window.dispatchEvent(new Event('resize'));
-
-  const audio=document.getElementById('bgm'),btn=document.getElementById('bgmToggle'),nxt=document.getElementById('bgmNext'),ttl=document.getElementById('bgmTitle');
-  const encodePath=p=>p.split('/').map(s=>encodeURIComponent(s)).join('/');
-  let idx=0,playing=false;
-  audio.volume=0.4;
-
-  function load(i,playNow){
-    idx=(i+TRACKS.length)%TRACKS.length;
-    audio.src=encodePath(TRACKS[idx].file);
-    ttl.textContent=TRACKS[idx].name;
-    if(playNow)audio.play().then(()=>setUI(true)).catch(()=>{});
-  }
-  audio.addEventListener('ended',()=>load(idx+1,true));
-
-  function setUI(on){
-    playing=on;btn.setAttribute('aria-pressed',String(on));
-    btn.textContent=on?'❚❚':'♪';
-  }
-  btn.addEventListener('click',e=>{
-    e.stopPropagation();
-    if(playing){audio.pause();setUI(false);sessionStorage.setItem('bgm_mute','1');}
-    else{audio.play().then(()=>{setUI(true);sessionStorage.removeItem('bgm_mute');}).catch(()=>{});}
-  });
-  nxt.addEventListener('click',e=>{e.stopPropagation();sessionStorage.removeItem('bgm_mute');load(idx+1,true);});
-
-  load(0,false);
-  const unlock=e=>{
-    if(e.target&&e.target.closest&&e.target.closest('#bgmBar'))return;
-    if(sessionStorage.getItem('bgm_mute')==='1'){cleanup();return;}
-    audio.play().then(()=>{setUI(true);cleanup();}).catch(()=>{});
-  };
-  const cleanup=()=>{['pointerdown','keydown'].forEach(ev=>removeEventListener(ev,unlock));};
-  ['pointerdown','keydown'].forEach(ev=>addEventListener(ev,unlock,{passive:true}));
-})();
+<script type="module">
+import { initBGM } from './bgm.js';
+initBGM({
+  page: '02', skin: 'geo', volume: .4,
+  beatTargets: [".sh"],
+  css: '.sh{scale:calc(1 + var(--beat,0)*.06)} @media(max-width:700px){.bgm{--bgm-bottom:14px;inset-inline-end:14px}}',
+  tracks: [
+    { title:'The Less I Know the Better', artist:'Tame Impala', src:'audio/02/The-Less-I-Know-The-Better-Tame-Impala-320.mp3', alt:'audio/02/The-Less-I-Know-The-Better-Tame-Impala-320.mp3' },
+    { title:'Get Lucky', artist:'Daft Punk', src:'audio/02/Get-Lucky.mp3', alt:'audio/02/Get Lucky.mp3' }
+  ]
+});
 </script>
 </body>
 </html>

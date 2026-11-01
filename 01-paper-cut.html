@@ -404,64 +404,18 @@ mount((res,q)=>{
   reveal(board);
 });
 </script>
-<style>
-.top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.bgm-paper{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:var(--sheet);color:var(--ink);font:800 12px 'Peyda','IRANYekanX',sans-serif;box-shadow:3px 3px 0 rgba(60,40,15,.28);transform:rotate(-1.2deg);clip-path:polygon(0 0,100% 0,100% calc(100% - 5px),93% 100%,0 100%)}
-.bgm-paper button{border:1.5px dashed var(--rust);background:transparent;color:var(--rust);padding:1px 8px;border-radius:4px;font:800 12px 'Peyda',sans-serif;transition:background .2s,color .2s}
-.bgm-paper button:hover,.bgm-paper button[aria-pressed="true"]{background:var(--pine);border-color:var(--pine);color:var(--sheet)}
-.bgm-paper .trk{max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;unicode-bidi:isolate;font-size:11px}
-@media(max-width:700px){
-  .bgm-paper{padding:4px 8px}
-  .bgm-paper .trk{display:none}
-}
-</style>
-<audio id="bgm" preload="auto"></audio>
-<script>
-(()=>{
-  const TRACKS=[
-    {name:'Gorillaz - Feel Good Inc.', file:'audio/01/Feel Good Inc. Gorillaz.mp3'},
-    {name:'Vance Joy - Riptide', file:'audio/01/Riptide.m4a'},
-    {name:'Twenty One Pilots - Stressed Out', file:'audio/01/1|2 - Stressed Out - Twenty One Pilots (320).mp3'}
-  ];
-  const top=document.querySelector('.top'),back=top.querySelector('.back');
-  const wrap=document.createElement('div');wrap.className='top-actions';
-  const bar=document.createElement('div');bar.className='bgm-paper stamp';bar.id='bgmBar';
-  bar.innerHTML='<button type="button" id="bgmToggle" aria-pressed="false">♪</button><button type="button" id="bgmNext" title="آهنگ بعدی">⏭</button><span class="trk" id="bgmTitle"></span>';
-  top.insertBefore(wrap,back);wrap.append(bar,back);
-
-  const audio=document.getElementById('bgm'),btn=document.getElementById('bgmToggle'),nxt=document.getElementById('bgmNext'),ttl=document.getElementById('bgmTitle');
-  const encodePath=p=>p.split('/').map(s=>encodeURIComponent(s)).join('/');
-  let idx=0,playing=false;
-  audio.volume=0.4;
-
-  function load(i,playNow){
-    idx=(i+TRACKS.length)%TRACKS.length;
-    audio.src=encodePath(TRACKS[idx].file);
-    ttl.textContent=TRACKS[idx].name;
-    if(playNow)audio.play().then(()=>setUI(true)).catch(()=>{});
-  }
-  audio.addEventListener('ended',()=>load(idx+1,true));
-
-  function setUI(on){
-    playing=on;btn.setAttribute('aria-pressed',String(on));
-    btn.textContent=on?'❚❚':'♪';
-  }
-  btn.addEventListener('click',e=>{
-    e.stopPropagation();
-    if(playing){audio.pause();setUI(false);sessionStorage.setItem('bgm_mute','1');}
-    else{audio.play().then(()=>{setUI(true);sessionStorage.removeItem('bgm_mute');}).catch(()=>{});}
-  });
-  nxt.addEventListener('click',e=>{e.stopPropagation();sessionStorage.removeItem('bgm_mute');load(idx+1,true);});
-
-  load(0,false);
-  const unlock=e=>{
-    if(e.target&&e.target.closest&&e.target.closest('#bgmBar'))return;
-    if(sessionStorage.getItem('bgm_mute')==='1'){cleanup();return;}
-    audio.play().then(()=>{setUI(true);cleanup();}).catch(()=>{});
-  };
-  const cleanup=()=>{['pointerdown','keydown'].forEach(ev=>removeEventListener(ev,unlock));};
-  ['pointerdown','keydown'].forEach(ev=>addEventListener(ev,unlock,{passive:true}));
-})();
+<script type="module">
+import { initBGM } from './bgm.js';
+initBGM({
+  page: '01', skin: 'paper', volume: .4,
+  beatTargets: [".sun"],
+  css: '.sun{scale:calc(1 + var(--beat,0)*.07)}',
+  tracks: [
+    { title:'Feel Good Inc.', artist:'Gorillaz', src:'audio/01/Feel-Good-Inc-Gorillaz.mp3', alt:'audio/01/Feel Good Inc. Gorillaz.mp3' },
+    { title:'Riptide', artist:'Vance Joy', src:'audio/01/Riptide.mp3', alt:'audio/01/Riptide.m4a' },
+    { title:'Stressed Out', artist:'Twenty One Pilots', src:'audio/01/1-2-Stressed-Out-Twenty-One-Pilots-320.mp3', alt:'audio/01/1|2 - Stressed Out - Twenty One Pilots (320).mp3' }
+  ]
+});
 </script>
 </body>
 </html>
